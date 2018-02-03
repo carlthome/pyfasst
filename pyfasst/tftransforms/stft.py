@@ -40,7 +40,7 @@ def stft(data, window=sinebell(2048),
     numberFrames = int(np.ceil(lengthData / np.double(hopsize)) + 2)
     # to ensure that the data array is big enough,
     # assuming the first frame is centered on first sample:
-    newLengthData = int(np.ceil(numberFrames - 1)*hopsize + lengthWindow))
+    newLengthData = int(np.ceil((numberFrames - 1)*hopsize + lengthWindow))
 
     # !!! adding zeros to the beginning of data, such that the first window is
     # centered on the first sample of data
