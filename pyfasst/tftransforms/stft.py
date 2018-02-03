@@ -121,14 +121,14 @@ def istft(X, window=sinebell(2048),
         data[beginFrame:endFrame] = (
             data[beginFrame:endFrame] + window * frameTMP)
     
-    data = data[(lengthWindow/2.0):]
-    normalisationSeq = normalisationSeq[(lengthWindow/2.0):]
+    data = data[lengthWindow//2:]
+    normalisationSeq = normalisationSeq[lengthWindow//2:]
     normalisationSeq[normalisationSeq==0] = 1.
     # ...added in the stft computation
     
     # normalising the liutkus way:
     data = data / normalisationSeq
-    
+
     return data
 
 def filter_stft(data, W, analysisWindow=None,
