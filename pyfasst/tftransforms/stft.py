@@ -37,31 +37,32 @@ def stft(data, window=sinebell(2048),
     lengthData = data.size
     
     # should be the number of frames by YAAFE:
-    numberFrames = np.ceil(lengthData / np.double(hopsize)) + 2
+    numberFrames = int(np.ceil(lengthData / np.double(hopsize)) + 2)
     # to ensure that the data array is big enough,
     # assuming the first frame is centered on first sample:
-    newLengthData = int((numberFrames - 1)*hopsize + lengthWindow)
-    
+    newLengthData = int(np.ceil(numberFrames - 1)*hopsize + lengthWindow))
+
     # !!! adding zeros to the beginning of data, such that the first window is
     # centered on the first sample of data
     data = np.pad(data, (lengthWindow//2, 0), 'constant')
     
     # zero-padding data such that it holds an exact number of frames
     data = np.pad(data, (0, newLengthData - data.size), 'constant')
-    
+
     # the output STFT has nfft/2+1 rows. Note that nfft has to be an even
     # number (and a power of 2 for the fft to be fast)
-    numberFrequencies = nfft / 2 + 1
-    
+    assert nfft % 2 == 0, 'nfft has to be even.'
+    numberFrequencies = nfft//2 + 1
+
     STFT = np.zeros([numberFrequencies, numberFrames], dtype=complex)
     
     # storing FT of each frame in STFT:
     for n in np.arange(numberFrames):
-        beginFrame = n*hopsize
-        endFrame = beginFrame+lengthWindow
+        beginFrame = int(np.ceil(n*hopsize))
+        endFrame = beginFrame + lengthWindow
         frameToProcess = window*data[beginFrame:endFrame]
-        STFT[:,n] = np.fft.rfft(frameToProcess, np.int32(nfft));
-        
+        STFT[:,n] = np.fft.rfft(frameToProcess, nfft)
+
     # frequency and time stamps:
     F = np.arange(numberFrequencies)/np.double(nfft)*fs
     N = np.arange(numberFrames)*hopsize/np.double(fs)
