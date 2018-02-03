@@ -44,7 +44,7 @@ def stft(data, window=sinebell(2048),
     
     # !!! adding zeros to the beginning of data, such that the first window is
     # centered on the first sample of data
-    data = np.concatenate((np.zeros(lengthWindow/2.0), data))
+    data = np.concatenate((np.zeros(int(lengthWindow/2.0)), data))
     
     # zero-padding data such that it holds an exact number of frames
     data = np.concatenate((data, np.zeros(newLengthData - data.size)))
