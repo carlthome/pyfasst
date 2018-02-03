@@ -38,9 +38,9 @@ def stft(data, window=sinebell(2048),
     
     # should be the number of frames by YAAFE:
     numberFrames = np.ceil(lengthData / np.double(hopsize)) + 2
-    # to ensure that the data array s big enough,
+    # to ensure that the data array is big enough,
     # assuming the first frame is centered on first sample:
-    newLengthData = (numberFrames-1) * hopsize + lengthWindow
+    newLengthData = int((numberFrames - 1)*hopsize + lengthWindow)
     
     # !!! adding zeros to the beginning of data, such that the first window is
     # centered on the first sample of data
