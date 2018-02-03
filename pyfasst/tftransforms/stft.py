@@ -44,10 +44,10 @@ def stft(data, window=sinebell(2048),
     
     # !!! adding zeros to the beginning of data, such that the first window is
     # centered on the first sample of data
-    data = np.concatenate((np.zeros(int(lengthWindow/2.0)), data))
+    data = np.pad(data, (lengthWindow//2, 0), 'constant')
     
     # zero-padding data such that it holds an exact number of frames
-    data = np.concatenate((data, np.zeros(newLengthData - data.size)))
+    data = np.pad(data, (0, newLengthData - data.size), 'constant')
     
     # the output STFT has nfft/2+1 rows. Note that nfft has to be an even
     # number (and a power of 2 for the fft to be fast)
